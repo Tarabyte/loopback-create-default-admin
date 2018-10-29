@@ -1,0 +1,32 @@
+{
+  "name": "loopback-create-default-admin",
+  "version": "0",
+  "description": "Ensure default admin User exists in datasource.",
+  "main": "index.js",
+  "repository": "https://github.com/Tarabyte/loopback-create-default-admin.git",
+  "author": "Yury Tarabanko <tarabanko.yury@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-node": "^4.0.0",
+    "jest": "^23.6.0"
+  },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "keywords": [
+    "loopback",
+    "boot",
+    "admin",
+    "user",
+    "role"
+  ],
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint .",
+    "tdd": "jest --watch --coverage"
+  },
+  "files": [
+    "index.js"
+  ]
+}
