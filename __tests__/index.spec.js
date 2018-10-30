@@ -140,4 +140,60 @@ describe('Create Default Admin User Boot', () => {
       where: { principalId: 'test-user-id', principalType: 'test-role-mapping' }
     });
   });
+
+  it('should autogenerate defaultRoleData', async () => {
+    const creator = createAdmin({
+      defaultUserData: {
+        username: 'test-default-user-data'
+      },
+      rolename: 'test-role-name'
+    });
+
+    const findOrCreateUser = jest
+      .fn()
+      .mockResolvedValue([{ id: 'test-user-id' }, false]);
+
+    const createPrincipal = jest
+      .fn()
+      .mockResolvedValue({ id: 'test-role-principal-id' });
+
+    const findPrincipal = jest
+      .fn()
+      .mockRejectedValue(new Error('should not be called'));
+
+    const findOrCreateRole = jest.fn().mockResolvedValue([
+      {
+        id: 'test-role-id',
+        principals: {
+          findOne: findPrincipal,
+          create: createPrincipal
+        }
+      },
+      true
+    ]);
+
+    const app = {
+      models: {
+        User: {
+          findOrCreate: findOrCreateUser
+        },
+        Role: {
+          findOrCreate: findOrCreateRole
+        },
+        RoleMapping: {
+          USER: 'test-rolemapping-user'
+        }
+      }
+    };
+    const done = jest.fn();
+
+    await creator(app, done);
+
+    expect(done).toBeCalledWith(null);
+
+    expect(findOrCreateRole).toBeCalledWith(
+      { name: 'test-role-name' },
+      { name: 'test-role-name' }
+    );
+  });
 });

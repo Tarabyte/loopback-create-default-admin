@@ -8,7 +8,9 @@ module.exports = (config = {}) => {
     username = 'admin',
     defaultUserData,
     rolename = 'admin',
-    defaultRoleData
+    defaultRoleData = {
+      name: rolename
+    }
   } = config;
 
   if (!defaultUserData) {
